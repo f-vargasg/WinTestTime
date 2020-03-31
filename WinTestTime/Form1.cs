@@ -33,11 +33,11 @@ namespace WinTestTime
 
         private void butStart_Click(object sender, EventArgs e)
         {
-            ProcessSimulator ps = new ProcessSimulator();
+            LogProcess logProc = new LogProcess();
             if (!processActivateBrgWrk.IsBusy)
             {
                 this.timeWaitLoading = Convert.ToInt32(txtTimeWait.Text) * 1000; // miliseconds
-                processActivateBrgWrk.RunWorkerAsync();  // Start del work
+                processActivateBrgWrk.RunWorkerAsync(logProc);  // Start del work
             }
             else
             {
@@ -54,18 +54,31 @@ namespace WinTestTime
         private void ProcessActivateBrgWrk_DoWork(object sender, DoWorkEventArgs e)
         {
             DateTime currentDate;
+            int waitTime;
             //string dateStr;
             //List<Price> argumList = e.Argument as List<Price>;
             // DoWorkLoadParams dwParams = e.Argument as DoWorkLoadParams;
-
+            LogProcess logProc = e.Argument as LogProcess;
+            
             BackgroundWorker worker = (BackgroundWorker)sender;
             while (!worker.CancellationPending)
             {
-                currentDate = DateTime.Now;
+                ProcessSimulator ps = new ProcessSimulator();
+                logProc.ProcessExecute = ps;
+                logProc.DtInic = DateTime.Now;
+                Thread.Sleep(ps.TimeDuration);
+                logProc.DtFin = DateTime.Now;
                 //dateStr = currentDate.ToString("dd/MM/yyyy HH:mm:ss");
-                e.Result = currentDate;
-                worker.ReportProgress(0, currentDate); // hace que se dispare el evento ProgressChanged
-                Thread.Sleep(this.timeWaitLoading);
+                e.Result = logProc;   // esto es para que en el evento progress changed poder atrapar
+                                      // en el metodo ProcessActivateBrgWrk_RunWorkerCompleted
+                worker.ReportProgress(0, logProc); // hace que se dispare el evento ProgressChanged
+                TimeSpan ts = logProc.DtFin - logProc.DtInic;
+                waitTime = ts.Minutes;
+                if (waitTime <= 0 )
+                {
+                    waitTime = 1000;    // espere 1 seg
+                }
+                Thread.Sleep(waitTime);
 
             }
         }
@@ -82,16 +95,18 @@ namespace WinTestTime
             }
             else
             {
-                DateTime dt = Convert.ToDateTime( e.Result);
-                MessageBox.Show("The task has been completed. Results: " + dt.ToString(FMT_DATE_TIME));
+                LogProcess dt = (LogProcess)(e.Result);
+                MessageBox.Show("The task has been completed. Results: " + dt.ToString());
             }
         }
 
         private void ProcessActivateBrgWrk_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //string logStr = e.UserState as string;
-            DateTime dt = Convert.ToDateTime ( e.UserState );
-            Console.WriteLine(dt.ToString (FMT_DATE_TIME));
+            LogProcess logProc = (LogProcess)(e.UserState);
+            //Console.WriteLine(dateStr);
+            txtOutPut.Text += (logProc.ToString() + Environment.NewLine);
+
         }
 
         private void butCancel_Click(object sender, EventArgs e)

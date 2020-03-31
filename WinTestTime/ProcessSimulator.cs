@@ -16,6 +16,7 @@ namespace WinTestTime
         {
             this.IdProcess = GenProcessId();
             this.TimeDuration = GenTimeDuration();
+
         }
 
 
@@ -35,7 +36,7 @@ namespace WinTestTime
         private int GenProcessId()
         {
             int res = 0;
-            res =       RandomNumber(1, 1000);
+            res = RandomNumber(1, 1000);
             return res;
         }
     }
