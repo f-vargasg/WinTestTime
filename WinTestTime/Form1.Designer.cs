@@ -33,6 +33,8 @@
             this.txtTimeWait = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.butStart = new System.Windows.Forms.Button();
+            this.processActivateBrgWrk = new System.ComponentModel.BackgroundWorker();
+            this.butCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -80,11 +82,30 @@
             this.butStart.UseVisualStyleBackColor = true;
             this.butStart.Click += new System.EventHandler(this.butStart_Click);
             // 
+            // processActivateBrgWrk
+            // 
+            this.processActivateBrgWrk.WorkerReportsProgress = true;
+            this.processActivateBrgWrk.WorkerSupportsCancellation = true;
+            this.processActivateBrgWrk.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ProcessActivateBrgWrk_DoWork);
+            this.processActivateBrgWrk.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.ProcessActivateBrgWrk_ProgressChanged);
+            this.processActivateBrgWrk.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.ProcessActivateBrgWrk_RunWorkerCompleted);
+            // 
+            // butCancel
+            // 
+            this.butCancel.Location = new System.Drawing.Point(720, 38);
+            this.butCancel.Name = "butCancel";
+            this.butCancel.Size = new System.Drawing.Size(84, 48);
+            this.butCancel.TabIndex = 5;
+            this.butCancel.Text = "Cancel";
+            this.butCancel.UseVisualStyleBackColor = true;
+            this.butCancel.Click += new System.EventHandler(this.butCancel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 431);
+            this.Controls.Add(this.butCancel);
             this.Controls.Add(this.butStart);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtTimeWait);
@@ -95,6 +116,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,6 +129,8 @@
         private System.Windows.Forms.TextBox txtTimeWait;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button butStart;
+        private System.ComponentModel.BackgroundWorker processActivateBrgWrk;
+        private System.Windows.Forms.Button butCancel;
     }
 }
 
