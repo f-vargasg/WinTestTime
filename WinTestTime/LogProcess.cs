@@ -13,12 +13,15 @@ namespace WinTestTime
         public DateTime DtInic { get; set; }
         public DateTime DtFin { get; set; }
 
+        public int WaitTime { get; set; }
+
 
         public LogProcess()
         {
             this.ProcessExecute = null;
             this.DtInic = DateTime.Now;
             this.DtFin = DateTime.Now;
+            this.WaitTime = 0;
         }
         public LogProcess(ProcessSimulator pProcessExecute)
         {
@@ -29,10 +32,11 @@ namespace WinTestTime
 
         public override string ToString()
         {
-            return "[Id: " + this.ProcessExecute.IdProcess.ToString()  + Environment.NewLine + 
+            return "[Id: " + this.ProcessExecute.IdProcess.ToString() + Environment.NewLine +
                     "duracion: " + this.ProcessExecute.TimeDuration.ToString() + Environment.NewLine +
-                    "Fec.Inic: "  + this.DtFin.ToString (FMT_DATE) +
-                    "Fec.Fin: " + this.DtFin.ToString(FMT_DATE) + "]";
+                    "Fec.Inic: " + this.DtInic.ToString(FMT_DATE) + Environment.NewLine +
+                    "Fec.Fin: " + this.DtFin.ToString(FMT_DATE) + Environment.NewLine +
+                    "Tiempo Espera: " + this.WaitTime.ToString() +  "]";
         }
 
     }

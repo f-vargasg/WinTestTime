@@ -36,7 +36,7 @@ namespace WinTestTime
             LogProcess logProc = new LogProcess();
             if (!processActivateBrgWrk.IsBusy)
             {
-                this.timeWaitLoading = Convert.ToInt32(txtTimeWait.Text) * 1000; // miliseconds
+                this.timeWaitLoading = Convert.ToInt32(txtTimeWait.Text); // miliseconds
                 processActivateBrgWrk.RunWorkerAsync(logProc);  // Start del work
             }
             else
@@ -53,8 +53,8 @@ namespace WinTestTime
         /// <param name="e"></param>
         private void ProcessActivateBrgWrk_DoWork(object sender, DoWorkEventArgs e)
         {
-            DateTime currentDate;
-            int waitTime;
+            //DateTime currentDate;
+            //int waitTime;
             //string dateStr;
             //List<Price> argumList = e.Argument as List<Price>;
             // DoWorkLoadParams dwParams = e.Argument as DoWorkLoadParams;
@@ -66,19 +66,20 @@ namespace WinTestTime
                 ProcessSimulator ps = new ProcessSimulator();
                 logProc.ProcessExecute = ps;
                 logProc.DtInic = DateTime.Now;
-                Thread.Sleep(ps.TimeDuration);
+                Thread.Sleep(ps.TimeDuration * 1000 );
                 logProc.DtFin = DateTime.Now;
                 //dateStr = currentDate.ToString("dd/MM/yyyy HH:mm:ss");
                 e.Result = logProc;   // esto es para que en el evento progress changed poder atrapar
                                       // en el metodo ProcessActivateBrgWrk_RunWorkerCompleted
                 worker.ReportProgress(0, logProc); // hace que se dispare el evento ProgressChanged
                 TimeSpan ts = logProc.DtFin - logProc.DtInic;
-                waitTime = ts.Minutes;
-                if (waitTime <= 0 )
+                logProc.WaitTime =  this.timeWaitLoading - ts.Seconds;
+                if (logProc.WaitTime <= 0 )
                 {
-                    waitTime = 1000;    // espere 1 seg
+                    logProc.WaitTime = 1;    // espere 1 seg
                 }
-                Thread.Sleep(waitTime);
+                int miliSecs = logProc.WaitTime * 1000;
+                Thread.Sleep(miliSecs);
 
             }
         }

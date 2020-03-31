@@ -49,9 +49,13 @@
             // 
             // txtOutPut
             // 
+            this.txtOutPut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutPut.Location = new System.Drawing.Point(12, 118);
             this.txtOutPut.Multiline = true;
             this.txtOutPut.Name = "txtOutPut";
+            this.txtOutPut.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtOutPut.Size = new System.Drawing.Size(954, 312);
             this.txtOutPut.TabIndex = 1;
             // 
