@@ -9,13 +9,17 @@ namespace WinTestTime
     class ProcessSimulator
     {
         public int IdProcess { get; set; }
-        public int TimeDuration { get; set; }
+        public int MaxTimeDuration { get; set; }
+
+        public int RealTimeDuration { get; set; }
 
 
-        public ProcessSimulator()
+
+        public ProcessSimulator(int pMaxTimeDuration)
         {
             this.IdProcess = GenProcessId();
-            this.TimeDuration = GenTimeDuration();
+            this.MaxTimeDuration = pMaxTimeDuration;
+            this.RealTimeDuration = GenTimeDuration();
 
         }
 
@@ -29,7 +33,8 @@ namespace WinTestTime
         private int GenTimeDuration()
         {
             int res = 0;
-            res = RandomNumber(1, 10);
+            
+            res =   RandomNumber(1, (this.MaxTimeDuration <= 0 ? 1 : this.MaxTimeDuration) );
             return res;
         }
 

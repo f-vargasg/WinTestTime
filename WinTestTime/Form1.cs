@@ -63,10 +63,12 @@ namespace WinTestTime
             BackgroundWorker worker = (BackgroundWorker)sender;
             while (!worker.CancellationPending)
             {
-                ProcessSimulator ps = new ProcessSimulator();
+                int maxTimeWaiting = Convert.ToInt32(txtTimeWait.Text);
+                ProcessSimulator ps = new ProcessSimulator(maxTimeWaiting);
+                ps.MaxTimeDuration = Convert.ToInt32(txtTimeWait.Text);
                 logProc.ProcessExecute = ps;
                 logProc.DtInic = DateTime.Now;
-                Thread.Sleep(ps.TimeDuration * 1000 );
+                Thread.Sleep(ps.RealTimeDuration * 1000 );
                 logProc.DtFin = DateTime.Now;
                 //dateStr = currentDate.ToString("dd/MM/yyyy HH:mm:ss");
                 e.Result = logProc;   // esto es para que en el evento progress changed poder atrapar
@@ -76,7 +78,7 @@ namespace WinTestTime
                 logProc.WaitTime =  this.timeWaitLoading - ts.Seconds;
                 if (logProc.WaitTime <= 0 )
                 {
-                    logProc.WaitTime = 1;    // espere 1 seg
+                    logProc.WaitTime = 0;    // espere 1 seg
                 }
                 int miliSecs = logProc.WaitTime * 1000;
                 Thread.Sleep(miliSecs);
