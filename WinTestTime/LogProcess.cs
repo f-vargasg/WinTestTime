@@ -33,9 +33,9 @@ namespace WinTestTime
         public override string ToString()
         {
             return "[Pid: " + this.ProcessExecute.IdProcess.ToString() + Environment.NewLine +
+                    "duracion: " + this.ProcessExecute.RealTimeDuration.ToString() + Environment.NewLine +
                     "Fec.Inic: " + this.DtInic.ToString(FMT_DATE) + Environment.NewLine +
                     "Fec.Fin: " + this.DtFin.ToString(FMT_DATE) + Environment.NewLine +
-                    "duracion: " + this.ProcessExecute.RealTimeDuration.ToString() + Environment.NewLine +
                     "Tiempo Espera: " + this.WaitTime.ToString() +  "]";
         }
 
