@@ -23,6 +23,11 @@ namespace WinTestTime
             this.DtFin = DateTime.Now;
             this.WaitTime = 0;
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pProcessExecute"></param>
         public LogProcess(ProcessSimulator pProcessExecute)
         {
             this.ProcessExecute = pProcessExecute;
