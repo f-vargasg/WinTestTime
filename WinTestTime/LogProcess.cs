@@ -11,7 +11,7 @@ namespace WinTestTime
         private const string FMT_DATE = "dd/MM/yyyy HH:mm:ss";
         public ProcessSimulator ProcessExecute { get; set; }
         public DateTime DtInic { get; set; }
-        public DateTime DtFin { get; set; }
+        public DateTime DtFin { get; set; }   // esto es un comentario de pruebas
 
         public int WaitTime { get; set; }
 
